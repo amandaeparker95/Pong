@@ -1,0 +1,262 @@
+[gd_scene load_steps=27 format=2]
+
+[ext_resource path="res://Entities/RPaddle.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Entities/LPaddle.tscn" type="PackedScene" id=2]
+[ext_resource path="res://assets/frame.png" type="Texture" id=3]
+[ext_resource path="res://Entities/Ball.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Entities/Avatar.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Levels/PongLevel.gd" type="Script" id=6]
+[ext_resource path="res://assets/Cinzel-VariableFont_wght.ttf" type="DynamicFontData" id=7]
+[ext_resource path="res://Levels/Player1.gd" type="Script" id=8]
+[ext_resource path="res://Levels/Player2.gd" type="Script" id=9]
+[ext_resource path="res://Entities/GroundUnit.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Entities/GroundUnit.gd" type="Script" id=11]
+[ext_resource path="res://Entities/GroundUnit2.gd" type="Script" id=12]
+[ext_resource path="res://Entities/Fire.tscn" type="PackedScene" id=13]
+[ext_resource path="res://assets/overly_dramatic_pong_music.ogg" type="AudioStream" id=14]
+[ext_resource path="res://assets/spicy.wav" type="AudioStream" id=15]
+[ext_resource path="res://FastPaddle.tscn" type="PackedScene" id=16]
+
+[sub_resource type="SegmentShape2D" id=1]
+a = Vector2( -44.7309, 131.718 )
+b = Vector2( 1206.05, 132.299 )
+
+[sub_resource type="SegmentShape2D" id=2]
+a = Vector2( 1265.13, 702.335 )
+b = Vector2( 14.7933, 702.335 )
+
+[sub_resource type="SegmentShape2D" id=3]
+a = Vector2( 14.6016, 700.824 )
+b = Vector2( 14.6588, 224.16 )
+
+[sub_resource type="SegmentShape2D" id=4]
+a = Vector2( 1264.75, 224.522 )
+b = Vector2( 1265.5, 701.654 )
+
+[sub_resource type="RectangleShape2D" id=5]
+extents = Vector2( 4.17058, 235.951 )
+
+[sub_resource type="RectangleShape2D" id=6]
+extents = Vector2( 2.07385, 237.486 )
+
+[sub_resource type="RectangleShape2D" id=7]
+extents = Vector2( 4.06905, 234.97 )
+
+[sub_resource type="DynamicFont" id=8]
+size = 25
+outline_color = Color( 0.352941, 0.278431, 0.278431, 1 )
+font_data = ExtResource( 7 )
+
+[sub_resource type="RectangleShape2D" id=9]
+extents = Vector2( 4.83057, 237.866 )
+
+[sub_resource type="DynamicFont" id=10]
+size = 48
+font_data = ExtResource( 7 )
+
+[node name="PongLevel" type="Node"]
+script = ExtResource( 6 )
+
+[node name="Background" type="ColorRect" parent="."]
+margin_left = 1.47156
+margin_top = 5.25565
+margin_right = 1281.47
+margin_bottom = 725.256
+color = Color( 0.117647, 0.117647, 0.137255, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Frame" type="StaticBody2D" parent="."]
+
+[node name="Top" type="CollisionShape2D" parent="Frame"]
+position = Vector2( 59.3704, 92.895 )
+shape = SubResource( 1 )
+
+[node name="Bottom" type="CollisionShape2D" parent="Frame"]
+shape = SubResource( 2 )
+
+[node name="Left" type="CollisionShape2D" parent="Frame"]
+shape = SubResource( 3 )
+
+[node name="Right" type="CollisionShape2D" parent="Frame"]
+shape = SubResource( 4 )
+
+[node name="Barrier2" type="CollisionShape2D" parent="Frame"]
+position = Vector2( 227.862, 463.279 )
+shape = SubResource( 5 )
+
+[node name="Barrier" type="CollisionShape2D" parent="Frame"]
+position = Vector2( 1050.03, 463.873 )
+shape = SubResource( 6 )
+one_way_collision_margin = 0.0
+
+[node name="Gui" type="Sprite" parent="Frame"]
+texture = ExtResource( 3 )
+offset = Vector2( 640, 360 )
+
+[node name="Ball" parent="." instance=ExtResource( 4 )]
+position = Vector2( 645.895, 475.019 )
+scale = Vector2( 0.6, 0.6 )
+
+[node name="FastPaddle" parent="." instance=ExtResource( 16 )]
+position = Vector2( 65, 539 )
+
+[node name="Player1" type="Node" parent="."]
+script = ExtResource( 8 )
+
+[node name="Zone" type="Area2D" parent="Player1"]
+position = Vector2( 66, 417 )
+collision_layer = 2147483650
+
+[node name="DetectBall" type="CollisionShape2D" parent="Player1/Zone"]
+position = Vector2( 237.166, 463.97 )
+shape = SubResource( 7 )
+
+[node name="Avatar" parent="Player1" instance=ExtResource( 5 )]
+position = Vector2( 446.892, 103.238 )
+
+[node name="Name" type="Label" parent="Player1"]
+margin_left = 63.0
+margin_top = 58.0
+margin_right = 336.0
+margin_bottom = 101.0
+custom_fonts/font = SubResource( 8 )
+text = "Big P1 Name Put Here"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Lives" type="Label" parent="Player1"]
+margin_left = 65.0
+margin_top = 105.0
+margin_right = 338.0
+margin_bottom = 148.0
+custom_fonts/font = SubResource( 8 )
+text = "Update P1 Lives Here"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Paddle" parent="Player1" instance=ExtResource( 2 )]
+position = Vector2( 250, 472.5 )
+rotation = 3.14159
+collision_layer = 2
+
+[node name="GroundUnit" parent="Player1/Paddle" instance=ExtResource( 10 )]
+position = Vector2( 125, 0 )
+scale = Vector2( 0.8, 1 )
+script = ExtResource( 11 )
+
+[node name="Fire" parent="Player1" instance=ExtResource( 13 )]
+margin_left = -393.6
+margin_top = -21.68
+margin_right = -184.96
+margin_bottom = 373.4
+
+[node name="Fire2" parent="Player1" instance=ExtResource( 13 )]
+margin_left = -22.6
+margin_top = -203.68
+margin_right = 17.04
+margin_bottom = -164.6
+
+[node name="Player2" type="Node" parent="."]
+script = ExtResource( 9 )
+
+[node name="Paddle" parent="Player2" instance=ExtResource( 1 )]
+position = Vector2( 1030, 472.5 )
+rotation = 3.14159
+collision_layer = 2147483650
+
+[node name="GroundUnit" parent="Player2/Paddle" instance=ExtResource( 10 )]
+position = Vector2( -125, 0 )
+scale = Vector2( 0.8, 1 )
+script = ExtResource( 12 )
+
+[node name="Zone" type="Area2D" parent="Player2"]
+position = Vector2( 66.3647, 471.532 )
+collision_layer = 2
+
+[node name="DetectBall" type="CollisionShape2D" parent="Player2/Zone"]
+position = Vector2( 1038.65, 475.056 )
+shape = SubResource( 9 )
+
+[node name="Avatar" parent="Player2" instance=ExtResource( 5 )]
+position = Vector2( 855.599, 104.652 )
+frame = 9
+
+[node name="Name" type="Label" parent="Player2"]
+margin_left = 962.0
+margin_top = 56.0
+margin_right = 1240.0
+margin_bottom = 99.0
+custom_fonts/font = SubResource( 8 )
+text = "Big P2 Name Put Here"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Lives" type="Label" parent="Player2"]
+margin_left = 962.0
+margin_top = 103.0
+margin_right = 1240.0
+margin_bottom = 146.0
+custom_fonts/font = SubResource( 8 )
+text = "Update P2 Lives Here"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Fire" parent="Player2" instance=ExtResource( 13 )]
+anchor_left = 0.825
+anchor_top = 0.323
+anchor_right = 0.888
+anchor_bottom = 0.434
+margin_left = -43.0
+margin_top = -6.56001
+margin_right = 127.36
+margin_bottom = 387.52
+
+[node name="Fire2" parent="Player2" instance=ExtResource( 13 )]
+margin_left = 386.4
+margin_top = -202.68
+margin_right = 426.04
+margin_bottom = -163.6
+
+[node name="CooldownTimer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
+[node name="CooldownLabel" type="Label" parent="."]
+visible = false
+margin_left = 628.612
+margin_top = 364.0
+margin_right = 657.612
+margin_bottom = 429.0
+custom_fonts/font = SubResource( 10 )
+text = "1"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BGM" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 14 )
+volume_db = -25.0
+
+[node name="Ignite" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 15 )
+volume_db = -5.0
+
+[connection signal="body_entered" from="Player1/Zone" to="." method="_on_P1_Zone_body_entered"]
+[connection signal="body_entered" from="Player2/Zone" to="." method="_on_P2_Zone_body_entered"]
+[connection signal="timeout" from="CooldownTimer" to="." method="_on_Cooldown_timeout"]
